@@ -1,4 +1,4 @@
-// const { ethers } = require("hardhat") - Do not enable this as it leads to HH9 error
+// Can lead to HH9 error if Hardhat is not initialized
 const { ethers, run, network } = require("hardhat")
 async function main() {
     const SimpleStorageFactory = await ethers.getContractFactory(
@@ -6,23 +6,24 @@ async function main() {
     )
     console.log("Deploying contract...")
     const simpleStorage = await SimpleStorageFactory.deploy()
-    await simpleStorage.deployed()
+    await simpleStorage.deployed() // Waits till it is deployed
     console.log(`Currently deployed to: ${simpleStorage.address}`)
-    if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
+    // chainId for Goerli: 5, use Chain ID List for more info
+    if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) { // Checks for the correct chainId and Etherscan's API
         console.log("Waiting for block TX(s)...")
-        await simpleStorage.deployTransaction.wait(6)
+        await simpleStorage.deployTransaction.wait(6) // Waits 6 blocks to confirm backend
         await verify(simpleStorage.address, [])
     }
-    // Get a number:
+    // Get a number: (use `toString()` accordingly)
     const currentValue = await simpleStorage.retrieve()
     console.log(`Current value: ${currentValue}`)
-    // Update number:
+    // Update the number:
     const transactionResponse = await simpleStorage.store(7)
-    await transactionResponse.wait(1)
+    await transactionResponse.wait(1) // Waits 1 block
     const updatedValue = await simpleStorage.retrieve()
     console.log(`Updated value: ${updatedValue}`)
 }
-//async function verify(contractAddress, args) {
+// Function to verify contract on Etherscan
 const verify = async (contractAddress, args) => {
     console.log("Verifying...")
     try {
@@ -31,7 +32,7 @@ const verify = async (contractAddress, args) => {
             constructorArguments: args,
         })
     } catch (e) {
-        if (e.message.toLowerCase().includes("not verified")) {
+        if (e.message.toLowerCase().includes("not verified")) { // If already verified
             console.log("Already verified!")
         } else {
             console.log(e)

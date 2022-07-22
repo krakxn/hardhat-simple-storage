@@ -2,17 +2,16 @@
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
-Try running some of the following tasks: (or the `yarn` equivalent)
+Try running the following to get the complete list of commands available:
 
 ```shell
 npx hardhat
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+```
+
+or,
+
+```shell
+yarn hardhat
 ```
 
 >Current networks (can add more): Goerli testnet, Hardhat localnet, Ganache localnet and localhost

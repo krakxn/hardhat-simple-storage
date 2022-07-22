@@ -14,6 +14,7 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
 >Current networks (can add more): Goerli testnet, Hardhat localnet, Ganache localnet and localhost
 >
 >Current API providers: Etherscan and CoinMarketCap
